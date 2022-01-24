@@ -1,11 +1,14 @@
 package com.vikas.pixabayandroid.ui.home
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
+import com.vikas.pixabayandroid.R
 import com.vikas.pixabayandroid.databinding.ActivityMainBinding
+import com.vikas.pixabayandroid.utils.PixabayUtils
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -38,6 +41,19 @@ class MainActivity : AppCompatActivity(), HasAndroidInjector {
         }
         setUpView()
         getData()
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.isError.observe(this) { isError ->
+            if (isError || PixabayUtils.isNetworkAvailable(this) == false) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.error_common),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     private fun getData() {

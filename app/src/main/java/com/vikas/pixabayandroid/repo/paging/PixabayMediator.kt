@@ -6,13 +6,13 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.vikas.pixabayandroid.BuildConfig
-import com.vikas.pixabayandroid.utils.PixabayConstants
+import com.vikas.pixabayandroid.utils.PixabayUtils
 import com.vikas.pixabayandroid.api.PixabayService
 import com.vikas.pixabayandroid.persistence.AppDatabase
 import com.vikas.pixabayandroid.persistence.PixabayModel
 import com.vikas.pixabayandroid.persistence.RemoteKeys
 import com.vikas.pixabayandroid.repo.PixabayRepository.Companion.DEFAULT_PAGE_INDEX
-import com.vikas.pixabayandroid.utils.PixabayConstants.SEARCH
+import com.vikas.pixabayandroid.utils.PixabayUtils.SEARCH
 import retrofit2.HttpException
 import java.io.IOException
 import java.io.InvalidObjectException
@@ -41,7 +41,7 @@ class PixabayMediator(val pixabayService: PixabayService, val appDatabase: AppDa
                 apiKey = BuildConfig.API_KEY,
                 perPage = state.config.pageSize,
                 query = SEARCH,
-                imageType = PixabayConstants.IMAGE_TYPE
+                imageType = PixabayUtils.IMAGE_TYPE
             )
             val isEndOfList = response.hits.isEmpty()
             appDatabase.withTransaction {

@@ -4,7 +4,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.vikas.pixabayandroid.BuildConfig
-import com.vikas.pixabayandroid.utils.PixabayConstants
+import com.vikas.pixabayandroid.utils.PixabayUtils
 import com.vikas.pixabayandroid.api.PixabayService
 import com.vikas.pixabayandroid.persistence.PixabayModel
 import com.vikas.pixabayandroid.repo.PixabayRepository.Companion.DEFAULT_PAGE_INDEX
@@ -34,8 +34,8 @@ class PixabayImagePagingSource(val pixabayService: PixabayService) :
                 page = page,
                 apiKey = BuildConfig.API_KEY,
                 perPage = DEFAULT_PAGE_SIZE,
-                query = PixabayConstants.SEARCH, //can also be passed using param as well to enable dynamic search functionality
-                imageType = PixabayConstants.IMAGE_TYPE
+                query = PixabayUtils.SEARCH, //can also be passed using param as well to enable dynamic search functionality
+                imageType = PixabayUtils.IMAGE_TYPE
             )
             LoadResult.Page(
                 response.hits, prevKey = if (page == DEFAULT_PAGE_INDEX) null else page - 1,

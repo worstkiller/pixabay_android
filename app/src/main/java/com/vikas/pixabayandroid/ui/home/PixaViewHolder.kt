@@ -28,7 +28,7 @@ class PixaViewHolder(private val itemViewBinding: ItemImageGridViewBinding) :
         pixabayModel?.run {
             Picasso.get()
                 .load(previewURL)
-                .placeholder(R.drawable.ic_image)
+                .placeholder(R.color.purple_200)
                 .into(itemViewBinding.ivImage)
             itemViewBinding.tvViews.text = views.toString()
             itemViewBinding.tvUser.text = user

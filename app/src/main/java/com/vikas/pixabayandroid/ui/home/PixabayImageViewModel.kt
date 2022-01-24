@@ -16,10 +16,12 @@ import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @ExperimentalPagingApi
-class PixabayImageViewModel @Inject constructor(val repository: PixabayRepository) : ViewModel() {
+class PixabayImageViewModel @Inject constructor(private val repository: PixabayRepository) :
+    ViewModel() {
 
     private val disposable = CompositeDisposable()
-    private var isError = MutableLiveData(false)
+    var isError = MutableLiveData(false)
+        private set
 
     fun getImages(data: (PagingData<PixabayModel>) -> Unit) {
         repository.getImagesObservable()
