@@ -4,11 +4,10 @@ import androidx.paging.ExperimentalPagingApi
 import com.vikas.pixabayandroid.api.PixabayService
 import com.vikas.pixabayandroid.persistence.AppDatabase
 import com.vikas.pixabayandroid.repo.PixabayRepository
-import com.vikas.pixabayandroid.ui.home.PixabayImageViewModel
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import retrofit2.Retrofit
+import javax.inject.Singleton
 
 @ExperimentalCoroutinesApi
 @ExperimentalPagingApi
@@ -16,13 +15,11 @@ import retrofit2.Retrofit
 class MainActivityModule {
 
     @Provides
-    fun providesPixabayRepository(retrofit: Retrofit, appDatabase: AppDatabase): PixabayRepository {
-        return PixabayRepository(retrofit.create(PixabayService::class.java), appDatabase)
+    @Singleton
+    fun providesPixabayRepository(
+        appDatabase: AppDatabase,
+        pixabayService: PixabayService
+    ): PixabayRepository {
+        return PixabayRepository(pixabayService, appDatabase)
     }
-
-    @Provides
-    fun providesPixabayImageViewModel(repository: PixabayRepository): PixabayImageViewModel {
-        return PixabayImageViewModel(repository)
-    }
-
 }

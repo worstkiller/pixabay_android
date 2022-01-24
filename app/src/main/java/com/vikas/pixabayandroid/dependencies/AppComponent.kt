@@ -1,11 +1,9 @@
 package com.vikas.pixabayandroid.dependencies
 
 import androidx.paging.ExperimentalPagingApi
-import androidx.room.RoomDatabase
 import com.google.gson.Gson
 import com.vikas.pixabayandroid.PixabayApp
 import com.vikas.pixabayandroid.persistence.AppDatabase
-import com.vikas.pixabayandroid.ui.di.MainActivityModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -21,7 +19,8 @@ import javax.inject.Singleton
         AppModule::class,
         RoomModule::class,
         NetworkModule::class,
-        ActivityBinder::class]
+        ActivityBinder::class,
+        ViewModelModule::class]
 )
 interface AppComponent {
 

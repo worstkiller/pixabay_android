@@ -2,7 +2,9 @@ package com.vikas.pixabayandroid.ui.home
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.ExperimentalPagingApi
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,10 +24,14 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), HasAndroidInjector {
 
     @Inject
-    lateinit var viewModel: PixabayImageViewModel
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
+
+    private val viewModel: PixabayImageViewModel by viewModels {
+        viewModelFactory
+    }
 
     private lateinit var mainBinding: ActivityMainBinding
 

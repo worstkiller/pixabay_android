@@ -1,11 +1,14 @@
 package com.vikas.pixabayandroid.dependencies
 
 import android.content.Context
+import androidx.paging.ExperimentalPagingApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.vikas.pixabayandroid.BuildConfig
+import com.vikas.pixabayandroid.api.PixabayService
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,6 +18,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
+@ExperimentalCoroutinesApi
+@ExperimentalPagingApi
 @Module
 class NetworkModule {
 
@@ -73,6 +78,12 @@ class NetworkModule {
     @Singleton
     fun providesGsonConverterFactory(): GsonConverterFactory {
         return GsonConverterFactory.create()
+    }
+
+    @Singleton
+    @Provides
+    fun providesPixabayService(retrofit: Retrofit): PixabayService {
+        return retrofit.create(PixabayService::class.java)
     }
 
 }
