@@ -1,0 +1,114 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdk 31
+
+    defaultConfig {
+        applicationId "com.vikas.pixabayandroid"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "API_BASE", '"https://pixabay.com/"'
+            buildConfigField "String", "API_KEY", '"12887834-e4336495d6ff69e659fa87748"'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_BASE", '"https://pixabay.com/"'
+            buildConfigField "String", "API_KEY", '"12887834-e4336495d6ff69e659fa87748"'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        useIR = true
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Kotlin
+    api kotlinDep.stdlib
+    api kotlinDep.coroutines
+
+    // Android
+    api androidDependencies.appCompat
+    implementation androidDependencies.androidXCore
+    implementation androidDependencies.activityKtx
+    implementation androidDependencies.fragmentKtx
+
+    // DI
+    api daggerDep.core
+    kapt daggerDep.compiler
+    kapt daggerDep.kapt
+    api daggerDep.support
+
+    // Arch Components
+    api archComponents.components
+    kapt archComponents.componentsCompiler
+    api archComponents.viewModelKtx
+    api archComponents.lifeCycleKtx
+
+    // Room
+    api roomDb.core
+    kapt roomDb.compiler
+    api roomDb.ktx
+    api roomDb.rx
+    api roomDb.paging
+    api roomDb.rxPaging
+
+    // Networking
+    api networking.okhttp
+    api networking.okhttpLog
+    api networking.gson
+    api networking.retrofit
+    api networking.retrofitRx
+    api networking.retrofitGson
+
+    // UI
+    api ui.constraintLayout
+    api ui.recyclerview
+    api ui.material
+    api ui.picasso
+    api ui.picassoOkHttp
+    api ui.lottie
+
+    // Rx
+    api rx.java
+    api rx.android
+    api rx.kotlin
+
+    // Testing
+    testImplementation testing.junit
+    testImplementation testing.mockitoKotlin
+    testImplementation testing.roboelectric
+    androidTestImplementation testing.androidJunit
+    androidTestImplementation testing.espresso
+
+}
