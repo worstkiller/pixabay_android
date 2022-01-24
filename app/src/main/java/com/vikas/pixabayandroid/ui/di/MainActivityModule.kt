@@ -1,5 +1,6 @@
 package com.vikas.pixabayandroid.ui.di
 
+import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import com.vikas.pixabayandroid.api.PixabayService
 import com.vikas.pixabayandroid.persistence.AppDatabase
@@ -18,8 +19,9 @@ class MainActivityModule {
     @Singleton
     fun providesPixabayRepository(
         appDatabase: AppDatabase,
-        pixabayService: PixabayService
+        pixabayService: PixabayService,
+        context: Context
     ): PixabayRepository {
-        return PixabayRepository(pixabayService, appDatabase)
+        return PixabayRepository(pixabayService, appDatabase, context)
     }
 }

@@ -12,6 +12,9 @@ interface PixabayDao {
     @Query("SELECT * FROM pixabaymodel")
     fun getAll(): PagingSource<Int, PixabayModel>
 
+    @Query("SELECT * FROM pixabaymodel")
+    fun getAllList(): List<PixabayModel>
+
     @Query("SELECT * FROM pixabaymodel WHERE id IN (:id)")
     fun loadAllByIds(id: IntArray): List<PixabayModel>
 

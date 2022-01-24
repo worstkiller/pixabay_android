@@ -6,16 +6,15 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.vikas.pixabayandroid.BuildConfig
-import com.vikas.pixabayandroid.utils.PixabayUtils
 import com.vikas.pixabayandroid.api.PixabayService
 import com.vikas.pixabayandroid.persistence.AppDatabase
 import com.vikas.pixabayandroid.persistence.PixabayModel
 import com.vikas.pixabayandroid.persistence.RemoteKeys
 import com.vikas.pixabayandroid.repo.PixabayRepository.Companion.DEFAULT_PAGE_INDEX
+import com.vikas.pixabayandroid.utils.PixabayUtils
 import com.vikas.pixabayandroid.utils.PixabayUtils.SEARCH
 import retrofit2.HttpException
 import java.io.IOException
-import java.io.InvalidObjectException
 
 @ExperimentalPagingApi
 class PixabayMediator(val pixabayService: PixabayService, val appDatabase: AppDatabase) :
@@ -77,15 +76,19 @@ class PixabayMediator(val pixabayService: PixabayService, val appDatabase: AppDa
             }
             LoadType.APPEND -> {
                 val remoteKeys = getLastRemoteKey(state)
-                    ?: throw InvalidObjectException("Remote key should not be null for $loadType")
-                remoteKeys.nextKey
+                val nextPage = remoteKeys?.nextKey
+                    ?: return MediatorResult.Success(
+                        endOfPaginationReached = remoteKeys != null
+                    )
+                nextPage
             }
             LoadType.PREPEND -> {
                 val remoteKeys = getFirstRemoteKey(state)
-                    ?: throw InvalidObjectException("Invalid state, key should not be null")
-                //end of list condition reached
-                remoteKeys.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
-                remoteKeys.prevKey
+                val prevPage = remoteKeys?.prevKey
+                    ?: return MediatorResult.Success(
+                        endOfPaginationReached = remoteKeys != null
+                    )
+                prevPage
             }
         }
     }

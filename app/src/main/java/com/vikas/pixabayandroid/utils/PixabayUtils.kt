@@ -24,4 +24,6 @@ object PixabayUtils {
                 null
             }
         }
+
+    fun getOrientation(context: Context) = context.resources.configuration.orientation
 }
